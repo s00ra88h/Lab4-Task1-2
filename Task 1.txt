@@ -1,0 +1,39 @@
+?- house = house.
+true.
+Why: identical atoms unify.
+
+?- house = abc.
+false.
+Why: two different atoms never unify.
+
+?- edge(a,b) = edge(C,b).
+C = a.
+Why: same functor/arity; C binds to a, and b = b.
+
+?- edge(a,d) = edge(C,B).
+C = a, B = d.
+Why: each variable binds to the matching argument.
+
+?- edge(C,B) = edge(a,d).
+C = a, B = d.
+Why: same as above; unification is symmetric.
+
+?- edge(A,f(g,h)) = edge(a,B).
+A = a, B = f(g,h).
+Why: A binds to a; B binds to the compound term f(g,h).
+
+?- edge(A,A) = edge(b,c).
+false.
+Why: A becomes b from the 1st argument, then the 2nd argument needs b = c, which fails.
+
+?- edge(A,A) = edge(b,b).
+A = b.
+Why: both arguments agree on b.
+
+?- A = B, B = f.
+A = B, B = f.
+Why: A and B are linked, and both end up bound to f.
+
+?- A = B, B = f, A = e.
+false.
+Why: A is already f (through B), so A = e requires f = e, which fails.
